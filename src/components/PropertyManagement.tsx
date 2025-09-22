@@ -305,13 +305,38 @@ export function PropertyManagement({ properties, onPropertyUpdate }: PropertyMan
                   </div>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <img
-                      src={property.image_url}
-                      alt={property.title}
-                      className="w-full h-32 object-cover rounded-lg mb-3"
-                    />
+                <div>
+                    {([property.image_url, ...(property.image_urls || [])]).length > 0 ? (
+                      <div className="flex gap-2 overflow-x-auto">
+                        {[property.image_url, ...(property.image_urls || [])]
+                          .filter(Boolean) // remove any empty strings/nulls
+                          .map((url, idx) => (
+                            <img
+                              key={idx}
+                              src={url}
+                              alt={`${property.title} ${idx + 1}`}
+                              className="w-32 h-32 object-cover rounded-lg mb-3 flex-shrink-0"
+                            />
+                          ))}
+                      </div>
+                    ) : (
+                      <div className="w-full h-32 bg-gray-200 rounded-lg mb-3 flex items-center justify-center text-gray-500">
+                        No image
+                      </div>
+                    )}
+
+                    <p className="text-sm text-gray-600 mb-3">{property.description}</p>
+                    <div className="flex flex-wrap gap-1">
+                      {property.amenities.map((amenity, index) => (
+                        <span
+                          key={index}
+                          className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded"
+                        >
+                          {amenity}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                     <p className="text-sm text-gray-600 mb-3">{property.description}</p>
                     <div className="flex flex-wrap gap-1">
                       {property.amenities.map((amenity, index) => (
@@ -347,15 +372,18 @@ export function PropertyManagement({ properties, onPropertyUpdate }: PropertyMan
                 </div>
               </div>
             )}
-          </div>
-        ))}
-
-        {properties.length === 0 && (
-          <div className="text-center py-12 text-gray-500">
-            No properties found
-          </div>
-        )}
-      </div>
     </div>
+  ))
+}
+
+{
+  properties.length === 0 && (
+    <div className="text-center py-12 text-gray-500">
+      No properties found
+    </div>
+  )
+}
+      </div >
+    </div >
   );
 }
