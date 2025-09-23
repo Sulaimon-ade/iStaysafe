@@ -34,13 +34,11 @@ export function PropertyCard({ property, onBook }: PropertyCardProps) {
 
   const isAvailable = property.available_units > 0;
 
-  // For demo purposes, create multiple images from the single image_url
-  // In production, you'd have an array of image URLs in your database
-  const images = [
-    property.image_url,
-    property.image_url, // You can replace these with actual different images
-    property.image_url,
-  ];
+    // Use DB images if available, fallback to single image
+  const images = property.image_urls && property.image_urls.length > 0 
+    ? property.image_urls 
+    : [property.image_url];
+
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
       <div className="relative">
