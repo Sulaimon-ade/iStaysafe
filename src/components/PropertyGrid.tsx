@@ -131,7 +131,7 @@ Is this still available?`;
       } else {
         // Open email client
         const subject = `Booking Request - ${selectedProperty.title} for ${eventConfig.event_name}`;
-        const emailUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+        const emailUrl = `mailto:iservicesintegratedltd@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
         window.open(emailUrl, '_blank');
       }
 
